@@ -74,4 +74,30 @@ void SYS::clearVerLED(void){
   #endif
 }
 
+void SYS::setHVLED(void){
+  #if defined(USE_HV_PROGRAMMING)
+  PORT(HVLED_PORT) |= 1 << HVLED_PIN;
+  #endif
+}
 
+void SYS::clearHVLED(void){
+  #if defined(USE_HV_PROGRAMMING)
+  PORT(HVLED_PORT) &= ~(1 << HVLED_PIN);
+  #endif
+}
+
+void SYS::pulseHV(void) {
+  #if defined(USE_HV_PROGRAMMING)
+  SYS::setHVLED();
+  _delay_ms(1); // initial delay after startup
+
+  #if defined(__AVR_ATtiny_Zero_One__)
+  PORTB.PIN0CTRL &= ~PORT_PULLUPEN_bm; // UPDI pullup disabled
+  PORTB.DIRSET = PIN0_bm; // UPDI rx enable
+  PORTB.OUTSET = cps;     // set cps
+  #endif
+  
+  _delay_ms(49);          // tri-state duration after HV pulse
+  SYS::clearHVLED();
+  #endif
+}
