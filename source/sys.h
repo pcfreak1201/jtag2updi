@@ -34,6 +34,8 @@
 // this will include the SIB, deduced NVM version, and silicon revision in early responses to SET_DEVICE_DESCRIPTPOR (for SIB and NVM version) and ENTER_PROGMODE (for silicon rev)
 //#define INCLUDE_EXTRA_INFO_JTAG
 
+// If using a device based on the HV programmer designed by dlloyd (@Dlloyddev on github), enable that functionality - simpler version of it by pcfreak1201
+#define USE_HV_PROGRAMMING
 
 // Auxiliary Macros
 #define CONCAT(A,B) A##B                // concatenate
